@@ -1,0 +1,2 @@
+# This project only uses Python standard libraries (string, random).
+# No external dependencies required.
