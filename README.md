@@ -1,21 +1,22 @@
 # 🧩 Sudoku Generator (Python)
 
-A simple **Sudoku puzzle generator** built with Python.  
-This project is part of my journey as a student developer exploring algorithms and problem-solving.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)]()
+[![Build](https://github.com/VollereiNyx/Sudoku/actions/workflows/python-app.yml/badge.svg)](https://github.com/VollereiNyx/Sudoku/actions)
+
+A simple Sudoku puzzle generator in Python — a student project to practice algorithms and code structure.
 
 ---
 
 ## 🚀 Features
-- Generate valid Sudoku puzzles  
-- Ensure unique solutions  
-- Built using **Python** (no external libraries required)  
-- Easy to understand and extend  
+- Generate Sudoku boards (placeholder generator)
+- Designed to be extended with solver & difficulty levels
+- Easy to read, documented code
 
 ---
 
-## 🛠️ Installation & Usage
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/VollereiNyx/Sudoku.git
-   cd Sudoku
+## 🛠️ Install & Run
+```bash
+git clone https://github.com/VollereiNyx/Sudoku.git
+cd Sudoku
+python sudoku.py
