@@ -31,33 +31,37 @@ def solve_board(board):
                 return False
     return True
 
-def count_solutions(board):
+def count_solutions(board, limit=2):
     for row in range(9):
         for col in range(9):
             if board[row][col] == 0:
                 for num in range(1, 10):
                     if is_valid(board, row, col, num):
                         board[row][col] = num
-                        if count_solutions(board) >= 2:
-                            board[row][col] = 0
-                            return 2
+                        sols = count_solutions(board, limit)
                         board[row][col] = 0
+                        if sols >= limit:
+                            return sols
                 return 0
     return 1
 
 def remove_numbers_unique(board, num_holes):
-    count = 0
-    while count < num_holes:
-        row = random.randint(0, 8)
-        col = random.randint(0, 8)
-        if board[row][col] != 0:
-            backup = board[row][col]
-            board[row][col] = 0
-            board_copy = [r[:] for r in board]
-            if count_solutions(board_copy) == 1:
-                count += 1
-            else:
-                board[row][col] = backup
+    positions = [(r, c) for r in range(9) for c in range(9)]
+    random.shuffle(positions)
+
+    removed = 0
+    for row, col in positions:
+        if removed >= num_holes:
+            break
+        backup = board[row][col]
+        if backup == 0:
+            continue
+        board[row][col] = 0
+        board_copy = [r[:] for r in board]
+        if count_solutions(board_copy, 2) == 1:
+            removed += 1
+        else:
+            board[row][col] = backup
 
 def print_board(board):
     for i in range(9):
