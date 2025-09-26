@@ -1,5 +1,4 @@
 import random
-import string
 
 def create_board():
     return [[0 for _ in range(9)] for _ in range(9)]
@@ -31,37 +30,36 @@ def solve_board(board):
                 return False
     return True
 
-def count_solutions(board, limit=2):
+def count_solutions(board):
     for row in range(9):
         for col in range(9):
             if board[row][col] == 0:
+                count = 0
                 for num in range(1, 10):
                     if is_valid(board, row, col, num):
                         board[row][col] = num
-                        sols = count_solutions(board, limit)
+                        count += count_solutions(board)
                         board[row][col] = 0
-                        if sols >= limit:
-                            return sols
-                return 0
+                        if count >= 2:
+                            return 2
+                return count
     return 1
 
 def remove_numbers_unique(board, num_holes):
-    positions = [(r, c) for r in range(9) for c in range(9)]
-    random.shuffle(positions)
-
-    removed = 0
-    for row, col in positions:
-        if removed >= num_holes:
-            break
-        backup = board[row][col]
-        if backup == 0:
-            continue
-        board[row][col] = 0
-        board_copy = [r[:] for r in board]
-        if count_solutions(board_copy, 2) == 1:
-            removed += 1
-        else:
-            board[row][col] = backup
+    count = 0
+    attempts = num_holes * 5
+    while count < num_holes and attempts > 0:
+        row = random.randint(0, 8)
+        col = random.randint(0, 8)
+        if board[row][col] != 0:
+            backup = board[row][col]
+            board[row][col] = 0
+            board_copy = [r[:] for r in board]
+            if count_solutions(board_copy) == 1:
+                count += 1
+            else:
+                board[row][col] = backup
+        attempts -= 1
 
 def print_board(board):
     for i in range(9):
@@ -76,7 +74,7 @@ def print_board(board):
 def generate_sudoku():
     board = create_board()
     solve_board(board)
-
+    solution = [r[:] for r in board]
     difficulty = input("Choose difficulty (easy, medium, hard): ").lower()
     if difficulty == 'easy':
         holes = 30
@@ -87,7 +85,6 @@ def generate_sudoku():
     else:
         print("Invalid choice, using medium.")
         holes = 40
-
     remove_numbers_unique(board, holes)
     print("\n🎲 Sudoku Puzzle:\n")
     print_board(board)
