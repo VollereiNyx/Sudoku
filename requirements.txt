@@ -1,0 +1,4 @@
+# Runtime uses Python standard library only.
+
+# PyInstaller is optional, used to build a standalone executable.
+pyinstaller>=6.0
